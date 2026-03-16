@@ -17,6 +17,9 @@ public class Alimento {
 
     public static String tipoMoneda = "COP";
     
+ // cambio 1: Atributo final que no se puede cambiar su valor
+    public final String MARCA_CERTIFICADA = "INVIMA";
+    
     // Constructor sobrecargado
     public Alimento(String nombre, int codigo, String fecha, String tamano, 
                     int cantidad, double costo, String estado, String recipiente, 
@@ -124,7 +127,7 @@ public class Alimento {
         this.proveedor = proveedor;
     }
     
-    // Método toString
+    // Metodo toString
     @Override
     public String toString() {
         return "Alimento{" +
@@ -142,7 +145,7 @@ public class Alimento {
                 '}';
     }
     
-    // Métodos adicionales del diagrama
+    // Metodos adicionales del diagrama
     public double calcularprecio() {
         return 0.0;
     }
@@ -152,5 +155,10 @@ public class Alimento {
     
     public String calcularcalidaddevencimiento() {
         return "";
+    }
+    
+ // cambio 2: Metodo final que no se puede sobrescribir
+    public final String obtenerInfo() {
+        return "Alimento: " + getNombre() + ", Codigo: " + getCodigo();
     }
 }

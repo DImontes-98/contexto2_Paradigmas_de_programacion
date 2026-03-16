@@ -1,0 +1,79 @@
+Explicacion y ubicaciones de lo requerido del contexto2
+
+1. Metodo Constructor
+Explicacion: Metodo especial que inicializa los atributos de un objeto al momento de crearlo.
+Ubicacion: Alimento.java - linea 20 (public Alimento(...))
+           Perecedero.java - linea 10 (public Perecedero(...))
+           Refrigerado.java - linea 14 (public Refrigerado(...))
+
+2. METODOS DE ACCESO (Getters y Setters)
+Explicacion: Metodos que permiten obtener (get) o modificar (set) los atributos privados de una clase.
+Ubicacion: Alimento.java - linea 34 (getNombre()) y linea 80 (setNombre())
+           Perecedero.java - linea 30 (getDiasVencimiento()) y linea 40 (setDiasVencimiento())
+
+3. METODO TOSTRING
+Explicacion: Metodo que retorna una representacion en texto del objeto.
+Ubicacion: Alimento.java - linea 106 (@Override public String toString())
+           Perecedero.java - linea 50 (@Override public String toString())
+           Refrigerado.java - linea 60 (@Override public String toString())
+
+4. MODIFICADOR STATIC
+Explicacion: Permite que un atributo o metodo pertenezca a la clase y no a una instancia especifica.
+Ubicacion: Alimento.java - linea 14 (public static String tipoMoneda = "COP")
+           Refrigerado.java - linea 7 (private static int totalRefrigerados)
+           Refrigerado.java - linea 40 (public static int getTotalRefrigerados())
+
+5. MODIFICADOR FINAL
+Explicacion: Impide que un atributo cambie su valor, que un metodo sea sobrescrito, o que una clase sea heredada.
+Ubicacion: Alimento.java - atributo (public final String MARCA_CERTIFICADA = "INVIMA")
+           Alimento.java - metodo (public final String obtenerInfo())
+           certificado.java - linea 1 (public final class certificado)
+
+6. VISIBILIDADES
+Explicacion: Controlan el acceso a clases, atributos y metodos. Private solo accesible en la clase, public accesible desde cualquier lugar.
+Ubicacion: Alimento.java - atributos privados linea 6 (private String nombre)
+           Alimento.java - metodos publicos linea 34 (public String getNombre())
+           Refrigerado.java - linea 7 (private static int totalRefrigerados)
+
+7. MULTIPLICIDADES
+Explicacion: Representan relaciones donde un objeto contiene arreglos de otros objetos.
+Ubicacion: Contenedor.java - linea 12 (private Sensor[] sensor)
+           Contenedor.java - linea 13 (private Alimento[] alimento)
+           Nave.java - linea 12 (private Contenedor[] contenedor)
+           Registro.java - linea 6 (private Alimento[] alimento)
+
+8. SOBREESCRITURA DE METODOS
+Explicacion: Una subclase redefine un metodo heredado de la superclase para darle su propio comportamiento.
+Ubicacion: Perecedero.java - linea 44 (@Override public String calcularDurabilidad())
+           NoPerecedero.java - linea 35 (@Override public String calcularDurabilidad())
+           Refrigerado.java - linea 52 (@Override public String calcularDurabilidad())
+
+9. SOBRECARGA DE METODOS
+Explicacion: Definir varios metodos con el mismo nombre pero diferentes parametros en la misma clase.
+Ubicacion: Alimento.java - constructor sobrecargado linea 20 (public Alimento(...))
+
+10. CREACION DE OBJETOS
+Explicacion: Instanciacion de clases usando la palabra reservada new.
+Ubicacion: Principal.java - linea 10 (new Alimento(...))
+           Principal.java - linea 13 (new Perecedero(...))
+           Principal.java - linea 18 (new NoPerecedero(...))
+           Principal.java - linea 23 (new Refrigerado(...))
+
+11. AGREGACIONES
+Explicacion: Relacion entre clases donde un objeto contiene referencias a otros objetos.
+Ubicacion: Nave.java - linea 10 (private Combustible combustible)
+           Nave.java - linea 12 (private Contenedor[] contenedor)
+           Contenedor.java - linea 11 (private Sensor[] sensor)
+           Registro.java - linea 7 (private Tripulante tripulante)
+
+12. HERENCIA
+Explicacion: Una clase hija hereda atributos y metodos de una clase padre usando extends.
+Ubicacion: Perecedero.java - linea 3 (public class Perecedero extends Alimento)
+           NoPerecedero.java - linea 3 (public class NoPerecedero extends Alimento)
+           Refrigerado.java - linea 5 (public class Refrigerado extends Perecedero)
+
+13. POLIMORFISMO
+Explicacion: Un objeto puede tomar diferentes formas. Un arreglo de tipo superclase puede contener objetos de subclases distintas.
+Ubicacion: Principal.java - arreglo Alimento[] arreglo = new Alimento[5]
+           Principal.java - metodo mostrarDurabilidad(Alimento a)
+           Principal.java - metodo crearAlimento(int tipo)
