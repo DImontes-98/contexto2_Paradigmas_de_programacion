@@ -1,5 +1,10 @@
 Explicacion y ubicaciones de lo requerido del contexto2
 
+Repositorio GITHUB
+************************
+https://github.com/DImontes-98/contexto2_Paradigmas_de_programacion
+
+
 1. Metodo Constructor
 Explicacion: Metodo especial que inicializa los atributos de un objeto al momento de crearlo.
 Ubicacion: Alimento.java - linea 20 (public Alimento(...))
