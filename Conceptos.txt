@@ -5,80 +5,113 @@ Repositorio GITHUB
 https://github.com/DImontes-98/contexto2_Paradigmas_de_programacion
 
 
-1. Metodo Constructor
+1. Método Constructor
 Explicacion:
-Ubicacion: Alimento.java - linea 20 (public Alimento(...))
-           Perecedero.java - linea 10 (public Perecedero(...))
-           Refrigerado.java - linea 14 (public Refrigerado(...))
+El constructor es un método que se ejecuta cuando se crea un objeto de una clase. Sirve para darle valores iniciales a los atributos del objeto cuando se crea.
 
-2. METODOS DE ACCESO (Getters y Setters)
+Ubicacion:
+Alimento.java - línea 20
+Perecedero.java - línea 10
+Refrigerado.java - línea 14
+
+2. Métodos de acceso (Getters y Setters)
 Explicacion:
-Ubicacion: Alimento.java - linea 34 (getNombre()) y linea 80 (setNombre())
-           Perecedero.java - linea 30 (getDiasVencimiento()) y linea 40 (setDiasVencimiento())
+Son métodos que permiten obtener o cambiar el valor de los atributos de una clase. Se usan porque los atributos suelen ser privados y no se pueden modificar directamente desde otras clases.
 
-3. METODO TOSTRING
+Ubicacion:
+Alimento.java - línea 34 y línea 80
+Perecedero.java - línea 30 y línea 40
+
+3. Método toString()
 Explicacion:
-Ubicacion: Alimento.java - linea 106 (@Override public String toString())
-           Perecedero.java - linea 50 (@Override public String toString())
-           Refrigerado.java - linea 60 (@Override public String toString())
+Este método sirve para mostrar la información de un objeto en forma de texto. Se usa cuando queremos imprimir los datos del objeto de forma más clara.
 
-4. MODIFICADOR STATIC
+Ubicacion:
+Alimento.java - línea 106
+Perecedero.java - línea 50
+Refrigerado.java - línea 60
+
+4. Modificador static
 Explicacion:
-Ubicacion: Alimento.java - linea 14 (public static String tipoMoneda = "COP")
-           Refrigerado.java - linea 7 (private static int totalRefrigerados)
-           Refrigerado.java - linea 40 (public static int getTotalRefrigerados())
+La palabra static indica que ese atributo o método pertenece a la clase y no a un objeto en específico. Por eso todos los objetos comparten ese mismo valor.
 
-5. MODIFICADOR FINAL
-Explicacion: 
-Ubicacion: Alimento.java - atributo (public final String MARCA_CERTIFICADA = "INVIMA")
-           Alimento.java - metodo (public final String obtenerInfo())
-           certificado.java - linea 1 (public final class certificado)
+Ubicacion:
+Alimento.java - línea 14
+Refrigerado.java - línea 7 y línea 40
 
-6. VISIBILIDADES
-Explicacion: 
-Ubicacion: Alimento.java - atributos privados linea 6 (private String nombre)
-           Alimento.java - metodos publicos linea 34 (public String getNombre())
-           Refrigerado.java - linea 7 (private static int totalRefrigerados)
-
-7. MULTIPLICIDADES
+5. Modificador final
 Explicacion:
-Ubicacion: Contenedor.java - linea 12 (private Sensor[] sensor)
-           Contenedor.java - linea 13 (private Alimento[] alimento)
-           Nave.java - linea 12 (private Contenedor[] contenedor)
-           Registro.java - linea 6 (private Alimento[] alimento)
+Final se usa para indicar que algo no se puede cambiar. Puede aplicarse a variables, métodos o clases.
 
-8. SOBREESCRITURA DE METODOS
-Explicacion:
-Ubicacion: Perecedero.java - linea 44 (@Override public String calcularDurabilidad())
-           NoPerecedero.java - linea 35 (@Override public String calcularDurabilidad())
-           Refrigerado.java - linea 52 (@Override public String calcularDurabilidad())
+Ubicacion:
+Alimento.java - atributo MARCA_CERTIFICADA
+Alimento.java - método obtenerInfo()
+certificado.java - línea 1
 
-9. SOBRECARGA DE METODOS
+6. Visibilidades
 Explicacion:
-Ubicacion: Alimento.java - constructor sobrecargado linea 20 (public Alimento(...))
+Las visibilidades sirven para controlar desde dónde se pueden usar los atributos o métodos de una clase. Por ejemplo, private significa que solo se puede usar dentro de la misma clase y public significa que se puede usar desde cualquier clase.
 
-10. CREACION DE OBJETOS
-Explicacion:
-Ubicacion: Principal.java - linea 10 (new Alimento(...))
-           Principal.java - linea 13 (new Perecedero(...))
-           Principal.java - linea 18 (new NoPerecedero(...))
-           Principal.java - linea 23 (new Refrigerado(...))
+Ubicacion:
+Alimento.java - línea 6
+Alimento.java - línea 34
+Refrigerado.java - línea 7
 
-11. AGREGACIONES
+7. Multiplicidades
 Explicacion:
-Ubicacion: Nave.java - linea 10 (private Combustible combustible)
-           Nave.java - linea 12 (private Contenedor[] contenedor)
-           Contenedor.java - linea 11 (private Sensor[] sensor)
-           Registro.java - linea 7 (private Tripulante tripulante)
+Las multiplicidades indican que una clase puede tener varios objetos de otra clase. En el código se representa usando arreglos.
 
-12. HERENCIA
-Explicacion:
-Ubicacion: Perecedero.java - linea 3 (public class Perecedero extends Alimento)
-           NoPerecedero.java - linea 3 (public class NoPerecedero extends Alimento)
-           Refrigerado.java - linea 5 (public class Refrigerado extends Perecedero)
+Ubicacion:
+Contenedor.java - línea 12 y 13
+Nave.java - línea 12
+Registro.java - línea 6
 
-13. POLIMORFISMO
+8. Sobreescritura de métodos
 Explicacion:
-Ubicacion: Principal.java - arreglo Alimento[] arreglo = new Alimento[5]
-           Principal.java - metodo mostrarDurabilidad(Alimento a)
-           Principal.java - metodo crearAlimento(int tipo)
+La sobreescritura ocurre cuando una clase hija usa un método de la clase padre pero le cambia su funcionamiento.
+
+Ubicacion:
+Perecedero.java - línea 44
+NoPerecedero.java - línea 35
+Refrigerado.java - línea 52
+
+9. Sobrecarga de métodos
+Explicacion:
+La sobrecarga ocurre cuando hay varios métodos con el mismo nombre pero con diferentes parámetros.
+
+Ubicacion:
+Alimento.java - línea 20
+
+10. Creación de objetos
+Explicacion:
+Es cuando se crea un objeto a partir de una clase usando la palabra new para poder usar sus atributos y métodos.
+
+Ubicacion:
+Principal.java - líneas 10, 13, 18 y 23
+
+11. Agregaciones
+Explicacion:
+La agregación es cuando una clase contiene objetos de otra clase como parte de ella, pero esos objetos pueden existir también por separado.
+
+Ubicacion:
+Nave.java - línea 10 y 12
+Contenedor.java - línea 11
+Registro.java - línea 7
+
+12. Herencia
+Explicacion:
+La herencia permite que una clase pueda usar atributos y métodos de otra clase. Esto ayuda a reutilizar código.
+
+Ubicacion:
+Perecedero.java - línea 3
+NoPerecedero.java - línea 3
+Refrigerado.java - línea 5
+
+13. Polimorfismo
+Explicacion:
+El polimorfismo permite que un mismo tipo de variable pueda trabajar con diferentes tipos de objetos.
+
+Ubicacion:
+Principal.java - arreglo Alimento[]
+Principal.java - método mostrarDurabilidad()
+Principal.java - método crearAlimento()
