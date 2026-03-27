@@ -130,7 +130,7 @@ public class Nave {
         this.contenedor = contenedor;
     }
     
-    // Método toString
+    // Metodo toString
     @Override
     public String toString() {
         return "Nave{" +
@@ -149,8 +149,8 @@ public class Nave {
                 '}';
     }
     
-    // Método adicional del diagrama
+    // Metodo adicional del diagrama
     public double calcularconsumo(double distancia) {
-        return 0.0; // Implementación básica
+        return 0.0;
     }
 }

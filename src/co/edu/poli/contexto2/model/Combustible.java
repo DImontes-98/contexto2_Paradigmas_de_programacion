@@ -100,7 +100,7 @@ public class Combustible {
         this.serial = serial;
     }
     
-    // Método toString
+    // Metodo toString
     @Override
     public String toString() {
         return "Combustible{" +
@@ -116,12 +116,12 @@ public class Combustible {
                 '}';
     }
     
-    // Métodos adicionales del diagrama
+    // Metodos adicionales del diagrama
     public boolean calcularconfiabilidad(boolean octable) {
-        return false; // Implementación básica
+        return false; 
     }
     
     public boolean calcularcaducidad(String inventario) {
-        return false; // Implementación básica
+        return false;
     }
 }

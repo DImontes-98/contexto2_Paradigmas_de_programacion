@@ -95,6 +95,6 @@ public class Tripulante {
     
     // Método adicional del diagrama
     public String verificarsalud(String adaptabilidad) {
-        return ""; // Implementación básica
+        return "";
     }
 }

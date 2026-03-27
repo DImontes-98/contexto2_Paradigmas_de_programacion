@@ -95,6 +95,6 @@ public class Registro {
     
     // Método adicional del diagrama
     public String calcularresponsabilidad(String actual) {
-        return ""; // Implementación básica
+        return "";
     }
 }

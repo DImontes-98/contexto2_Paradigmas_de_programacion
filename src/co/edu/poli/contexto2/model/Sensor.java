@@ -73,6 +73,6 @@ public class Sensor {
     
     // Método adicional del diagrama
     public String verificarestado(String gusto) {
-        return ""; // Implementación básica
+        return ""; 
     }
 }

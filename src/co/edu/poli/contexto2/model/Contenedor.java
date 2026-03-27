@@ -130,7 +130,7 @@ public class Contenedor {
         this.alimento = alimento;
     }
     
-    // Método toString
+    // Metodo toString
     @Override
     public String toString() {
         return "Contenedor{" +
@@ -149,12 +149,12 @@ public class Contenedor {
                 '}';
     }
     
-    // Métodos adicionales del diagrama
+    // Metodos adicionales del diagrama
     public double calcularcapacidad(double medida) {
-        return 0.0; // Implementación básica
+        return 0.0;
     }
     
     public String calculardurabilidad(String actual) {
-        return ""; // Implementación básica
+        return ""; 
     }
 }
