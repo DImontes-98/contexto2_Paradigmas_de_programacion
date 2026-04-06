@@ -2,28 +2,36 @@ package co.edu.poli.contexto2.servicios;
 
 import co.edu.poli.contexto2.model.Alimento;
 
-/*Interfaz que define las operaciones crud sobre objetos de tipo Alimento (super super clase).
+/**
+ * Interfaz que define las operaciones CRUD sobre objetos de tipo {@code Alimento}.
+ * <p>
+ * Establece el contrato de comportamiento para crear, consultar, modificar,
+ * eliminar y listar alimentos dentro del sistema de gestión de inventario.
+ * </p>
+ *
+ * <p>La implementación utiliza un arreglo base de tamaño 2 como almacenamiento
+ * primario.</p>
  */
 public interface Operacioncrud {
 
-    /* Inserta el alimento en el primer null del arreglo base (tamaño 2).
-     Si el arreglo está lleno, lo agrega al almacén adicional (ArrayList infinito).
-     */
     String crear(Alimento alimento);
 
-    /* Busca y retorna el alimento cuyo codigo coincida con el id recibido.
-      Busca primero en el arreglo base y luego en el almacén adicional.
-     */
     Alimento consultar(int id);
-    /* Reemplaza los datos del alimento con el codigo=id por los del nuevo objeto. Busca en el arreglo base y luego en el almacén adicional.
-     */
+
     String modificar(int id, Alimento nuevoAlimento);
 
-    /* Elimina (pone en null o elimina de la lista) el alimento cuyo codigo=id.
+    /**
+     * Elimina el alimento cuyo {@code codigo} sea igual a {@code id}.
+     *
+     * @param id código identificador del alimento
+     * @return mensaje indicando el resultado
      */
     String eliminar(int id);
 
-    /*Lista todos los alimentos almacenados (arreglo + almacén adicional).
+    /**
+     * Lista todos los alimentos almacenados.
+     *
+     * @return listado de alimentos en formato {@code String}
      */
     String listar();
 }

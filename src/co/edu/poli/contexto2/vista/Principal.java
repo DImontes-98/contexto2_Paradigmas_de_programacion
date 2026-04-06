@@ -1,14 +1,179 @@
 package co.edu.poli.contexto2.vista;
 
+import java.util.Scanner;
+
 import co.edu.poli.contexto2.model.*;
 import co.edu.poli.contexto2.servicios.Implementacionoperacioncrud;
 import co.edu.poli.contexto2.servicios.Operacioncrud;
-import co.edu.poli.contexto2.model.Refrigerado;
 
 public class Principal {
 
     public static void main(String[] args) {
 
+        Scanner scanner = new Scanner(System.in);
+        int opcion;
+
+        Operacioncrud crud = new Implementacionoperacioncrud();
+
+        // menu
+        do {
+            System.out.println("---- MENU DE OPCIONES ----");
+            System.out.println("1. Digite 1 para CREAR un alimento");
+            System.out.println("2. Digite 2 para CONSULTAR un alimento");
+            System.out.println("3. Digite 3 para MODIFICAR un alimento");
+            System.out.println("4. Digite 4 para ELIMINAR un alimento");
+            System.out.println("5. Digite 5 para LISTAR alimentos");
+            System.out.println("6. Digite 6 para SERIALIZAR");
+            System.out.println("7. Digite 7 para DESERIALIZAR");
+            System.out.println("8. Salir");
+            System.out.print("Elija una opción: ");
+            opcion = scanner.nextInt();
+
+            switch (opcion) {
+
+            case 1:
+                System.out.println("=== CREAR ===");
+
+                System.out.print("Codigo: ");
+                int codigo = scanner.nextInt();
+                scanner.nextLine();
+
+                System.out.print("Nombre: ");
+                String nombre = scanner.nextLine();
+
+                System.out.print("Fecha: ");
+                String fecha = scanner.nextLine();
+
+                System.out.print("Tamaño: ");
+                String tamano = scanner.nextLine();
+
+                System.out.print("Cantidad: ");
+                int cantidad = scanner.nextInt();
+
+                System.out.print("Costo: ");
+                double costo = scanner.nextDouble();
+                scanner.nextLine();
+
+                System.out.print("Estado: ");
+                String estado = scanner.nextLine();
+
+                System.out.print("Recipiente: ");
+                String recipiente = scanner.nextLine();
+
+                System.out.print("¿Es refrigerable? (true/false): ");
+                boolean esRefrigerable = scanner.nextBoolean();
+
+                System.out.print("Peso: ");
+                double peso = scanner.nextDouble();
+                scanner.nextLine();
+
+                System.out.print("Proveedor: ");
+                String proveedor = scanner.nextLine();
+
+                // Atributos de Perecedero
+                System.out.print("Dias de vencimiento: ");
+                int dias = scanner.nextInt();
+                scanner.nextLine();
+
+                System.out.print("Tipo de conservacion: ");
+                String tipoConservacion = scanner.nextLine();
+
+                Alimento alimento = new Perecedero(
+                        nombre, codigo, fecha, tamano, cantidad,
+                        costo, estado, recipiente, esRefrigerable,
+                        peso, proveedor, dias, tipoConservacion
+                );
+
+                System.out.println(crud.crear(alimento));
+                break;
+
+                case 2:
+                    System.out.println("=== CONSULTAR ===");
+                    System.out.print("Ingrese codigo: ");
+                    int idConsulta = scanner.nextInt();
+
+                    Alimento encontrado = crud.consultar(idConsulta);
+                    if (encontrado != null) {
+                        System.out.println(encontrado.describir());
+                    } else {
+                        System.out.println("No encontrado");
+                    }
+                    break;
+
+                case 3:
+                    System.out.println("=== MODIFICAR ===");
+                    System.out.print("Codigo a modificar: ");
+                    int idMod = scanner.nextInt();
+                    scanner.nextLine();
+
+                    System.out.print("Nuevo nombre: ");
+                    String nuevoNombre = scanner.nextLine();
+
+                    System.out.print("Nuevo costo: ");
+                    double nuevoCosto = scanner.nextDouble();
+
+                    Alimento nuevo = new Perecedero(nuevoNombre, idMod, "", "", 0,
+                            nuevoCosto, "", "", false, 0, "", 0, "");
+
+                    System.out.println(crud.modificar(idMod, nuevo));
+                    break;
+
+                case 4:
+                    System.out.println("=== ELIMINAR ===");
+                    System.out.print("Codigo a eliminar: ");
+                    int idEliminar = scanner.nextInt();
+
+                    System.out.println(crud.eliminar(idEliminar));
+                    break;
+
+                case 5:
+                    System.out.println("=== LISTAR ===");
+                    System.out.println(crud.listar());
+                    break;
+
+                case 6:
+                    System.out.println("=== SERIALIZAR ===");
+
+                    Implementacionoperacioncrud impl = (Implementacionoperacioncrud) crud;
+
+                    // El archivo datos.bin se genera en la raíz del proyecto (workspace de Eclipse)
+                    System.out.println(impl.serializar("", "datos.bin"));
+
+                    break;
+
+                case 7:
+                    System.out.println("=== DESERIALIZAR ===");
+
+                    Implementacionoperacioncrud impl2 = (Implementacionoperacioncrud) crud;
+
+                    // Mismo nombre que se usó al serializar
+                    Alimento[] datos = impl2.deserializar("", "datos.bin");
+
+                    if (datos != null) {
+                        for (Alimento a : datos) {
+                            if (a != null) {
+                                System.out.println(a.describir());
+                            }
+                        }
+                    }
+
+                    break;
+
+                case 8:
+                    System.out.println("Saliendo del programa...");
+                    break;
+
+                default:
+                    System.out.println("Opción no válida.");
+            }
+
+        } while (opcion != 8);
+
+        scanner.close();
+    }
+}
+
+/*
         // Pruebas originales del contexto (sin modificar)
         Perecedero perecedero1 = new Perecedero("Leche", 2001, "05/03/2026", "Grande",
                 20, 1500.0, "Bueno", "Cartón", true, 2.0, "Lácteos SA", 10, "Frío");
@@ -146,3 +311,4 @@ public class Principal {
         System.out.println(crud.listar());
     }
 }
+*/

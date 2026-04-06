@@ -1,28 +1,71 @@
 package co.edu.poli.contexto2.servicios;
 
-import co.edu.poli.contexto2.model.Alimento;
-import java.util.ArrayList;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
-/* Implementación de OperacionCRUD.
- Estructura de almacenamiento:
+import co.edu.poli.contexto2.model.Alimento;
+
+/*
+ * Implementación de OperacionCRUD.
+ * Estructura de almacenamiento:
  *   - alimentos[2]: arreglo fijo de tamaño 2
- *   - almacen: ArrayList que crece infinitamente cuando el arreglo esta lleno
-Todas las búsquedas (consultar / modificar / eliminar) se hacen por codigo (int).
+ * Todas las búsquedas (consultar / modificar / eliminar) se hacen por codigo (int).
+ */
+/**
+ * Implementación de la interfaz {@code Operacioncrud} para la gestión de
+ * objetos {@code Alimento} mediante un arreglo fijo de capacidad 2.
+ * <p>
+ * Utiliza únicamente el arreglo base como estructura de almacenamiento.
+ * Si el arreglo está lleno al intentar insertar, la operación retorna un
+ * mensaje de error sin agregar el elemento.
+ * </p>
+ * <p>
+ * Todas las búsquedas (consultar, modificar, eliminar) se realizan
+ * por el campo {@code codigo} de tipo {@code int}.
+ * </p>
+ *
+ * <p>Ejemplo de uso:</p>
+ * <pre>{@code
+ * Implementacionoperacioncrud crud = new Implementacionoperacioncrud();
+ * crud.crear(new Perecedero(...));
+ * System.out.println(crud.listar());
+ * }</pre>
  */
 public class Implementacionoperacioncrud implements Operacioncrud {
 
-    private Alimento[] alimentos;           // arreglo de tamaño 2
-    private ArrayList<Alimento> almacen;    // desbordamiento / crecimiento infinito
+    /** Arreglo fijo de tamaño 2 para almacenar los alimentos. */
+    private Alimento[] alimentos;
 
+    /**
+     * Crea una nueva instancia de {@code Implementacionoperacioncrud}
+     * e inicializa el arreglo de alimentos con capacidad 2.
+     */
     public Implementacionoperacioncrud() {
         alimentos = new Alimento[2];
-        almacen   = new ArrayList<>();
     }
 
-    //CREAR 
+    // CREAR
+    /**
+     * Inserta el alimento en el primer espacio disponible ({@code null})
+     * del arreglo fijo de tamaño 2.
+     * <p>
+     * Realiza las siguientes validaciones antes de insertar:
+     * el alimento no puede ser nulo, el código debe ser mayor que 0,
+     * el nombre no puede estar vacío, el costo no puede ser negativo,
+     * y no puede existir ya un alimento con el mismo código.
+     * </p>
+     * <p>
+     * Si el arreglo está lleno, retorna un mensaje de error.
+     * </p>
+     *
+     * @param alimento objeto {@code Alimento} a insertar
+     * @return mensaje indicando el resultado de la operación como {@code String}
+     */
     @Override
     public String crear(Alimento alimento) {
-        // Validaciones previas
         if (alimento == null) {
             return "ERROR: No se puede insertar un alimento nulo.";
         }
@@ -39,7 +82,6 @@ public class Implementacionoperacioncrud implements Operacioncrud {
             return "ERROR: Ya existe un alimento con codigo " + alimento.getCodigo();
         }
 
-        // Buscar el primer null en el arreglo fijo (de izquierda a derecha)
         for (int i = 0; i < alimentos.length; i++) {
             if (alimentos[i] == null) {
                 alimentos[i] = alimento;
@@ -48,14 +90,21 @@ public class Implementacionoperacioncrud implements Operacioncrud {
             }
         }
 
-        // Arreglo lleno -> se agrega al almacen adicional (ArrayList ilimitado)
-        almacen.add(alimento);
-        return "OK: Arreglo lleno. Alimento '" + alimento.getNombre() +
-               "' agregado al almacén adicional (posición " +
-               (almacen.size() - 1) + ").";
+        return "ERROR: Arreglo lleno. No se puede insertar el alimento '" +
+               alimento.getNombre() + "'.";
     }
 
-    //CONSULTAR
+    // CONSULTAR
+    /**
+     * Busca y retorna el alimento cuyo {@code codigo} coincida con el {@code id} recibido.
+     * <p>
+     * La búsqueda se realiza únicamente en el arreglo fijo.
+     * Si el {@code id} es menor o igual a 0, imprime un mensaje de error y retorna {@code null}.
+     * </p>
+     *
+     * @param id código identificador del alimento a consultar; debe ser mayor que 0
+     * @return el objeto {@code Alimento} encontrado, o {@code null} si no existe
+     */
     @Override
     public Alimento consultar(int id) {
         if (id <= 0) {
@@ -63,13 +112,7 @@ public class Implementacionoperacioncrud implements Operacioncrud {
             return null;
         }
 
-        // Buscar en arreglo fijo
         for (Alimento a : alimentos) {
-            if (a != null && a.getCodigo() == id) return a;
-        }
-
-        // Buscar en almacen adicional
-        for (Alimento a : almacen) {
             if (a != null && a.getCodigo() == id) return a;
         }
 
@@ -78,6 +121,17 @@ public class Implementacionoperacioncrud implements Operacioncrud {
     }
 
     // MODIFICAR
+    /**
+     * Reemplaza el alimento con {@code codigo} igual a {@code id} por el nuevo objeto.
+     * <p>
+     * Realiza validaciones sobre el {@code id} y el {@code nuevoAlimento} antes de modificar.
+     * La búsqueda se realiza únicamente en el arreglo fijo.
+     * </p>
+     *
+     * @param id            código identificador del alimento a modificar; debe ser mayor que 0
+     * @param nuevoAlimento nuevo objeto {@code Alimento} con los datos actualizados
+     * @return mensaje indicando el resultado de la operación como {@code String}
+     */
     @Override
     public String modificar(int id, Alimento nuevoAlimento) {
         if (id <= 0) {
@@ -93,7 +147,6 @@ public class Implementacionoperacioncrud implements Operacioncrud {
             return "ERROR modificar: El costo no puede ser negativo.";
         }
 
-        // Modificar en arreglo fijo
         for (int i = 0; i < alimentos.length; i++) {
             if (alimentos[i] != null && alimentos[i].getCodigo() == id) {
                 alimentos[i] = nuevoAlimento;
@@ -101,25 +154,26 @@ public class Implementacionoperacioncrud implements Operacioncrud {
             }
         }
 
-        // Modificar en almacén adicional
-        for (int i = 0; i < almacen.size(); i++) {
-            if (almacen.get(i) != null && almacen.get(i).getCodigo() == id) {
-                almacen.set(i, nuevoAlimento);
-                return "OK: Alimento con codigo " + id + " modificado en almacén adicional (posición " + i + ").";
-            }
-        }
-
         return "ERROR modificar: No existe alimento con codigo " + id;
     }
 
-    //ELIMINAR
+    // ELIMINAR
+    /**
+     * Elimina el alimento cuyo {@code codigo} sea igual a {@code id},
+     * estableciendo su posición en {@code null} para liberar el espacio.
+     * <p>
+     * La búsqueda se realiza únicamente en el arreglo fijo.
+     * </p>
+     *
+     * @param id código identificador del alimento a eliminar; debe ser mayor que 0
+     * @return mensaje indicando el resultado de la operación como {@code String}
+     */
     @Override
     public String eliminar(int id) {
         if (id <= 0) {
             return "ERROR eliminar: El id debe ser mayor que 0.";
         }
 
-        // Eliminar en arreglo fijo (se pone null para liberar la posición)
         for (int i = 0; i < alimentos.length; i++) {
             if (alimentos[i] != null && alimentos[i].getCodigo() == id) {
                 String nombre = alimentos[i].getNombre();
@@ -129,20 +183,20 @@ public class Implementacionoperacioncrud implements Operacioncrud {
             }
         }
 
-        // Eliminar en almacén adicional
-        for (int i = 0; i < almacen.size(); i++) {
-            if (almacen.get(i) != null && almacen.get(i).getCodigo() == id) {
-                String nombre = almacen.get(i).getNombre();
-                almacen.remove(i);
-                return "OK: Alimento '" + nombre + "' (codigo=" + id +
-                       ") eliminado del almacén adicional.";
-            }
-        }
-
         return "ERROR eliminar: No existe alimento con codigo " + id;
     }
 
-    // LISTAR 
+    // LISTAR
+    /**
+     * Genera y retorna un listado de todos los alimentos almacenados
+     * en el arreglo fijo de tamaño 2.
+     * <p>
+     * Muestra cada posición del arreglo, indicando si está vacía o mostrando
+     * la descripción del alimento mediante su método {@code describir()}.
+     * </p>
+     *
+     * @return cadena con el listado completo de alimentos como {@code String}
+     */
     @Override
     public String listar() {
         StringBuilder sb = new StringBuilder();
@@ -160,16 +214,7 @@ public class Implementacionoperacioncrud implements Operacioncrud {
             }
         }
 
-        if (!almacen.isEmpty()) {
-            sb.append("-- Almacén adicional (").append(almacen.size()).append(" elementos) --\n");
-            for (int i = 0; i < almacen.size(); i++) {
-                sb.append("  [").append(i).append("] ")
-                  .append(almacen.get(i).describir()).append("\n");
-            }
-            hayAlgo = true;
-        }
-
-        if (!hayAlgo && almacen.isEmpty()) {
+        if (!hayAlgo) {
             sb.append("  (sin alimentos registrados)\n");
         }
 
@@ -177,14 +222,57 @@ public class Implementacionoperacioncrud implements Operacioncrud {
         return sb.toString();
     }
 
-    //Utilidad privada 
+    /**
+     * Verifica si ya existe un alimento con el código especificado en el arreglo fijo.
+     *
+     * @param id código a verificar
+     * @return {@code true} si ya existe un alimento con ese código, {@code false} en caso contrario
+     */
+    // Utilidad privada
     private boolean duplicado(int id) {
         for (Alimento a : alimentos) {
             if (a != null && a.getCodigo() == id) return true;
         }
-        for (Alimento a : almacen) {
-            if (a != null && a.getCodigo() == id) return true;
-        }
         return false;
+    }
+    
+    //aca empieza serializar y deserealizar
+    public String serializar(String path, String name) {
+        try {
+            FileOutputStream fos = new FileOutputStream(path + name);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(alimentos); // mi arreglo
+            oos.close();
+            fos.close();
+            return "File create!!";
+        } catch (IOException ioe) {
+            return "Error file " + ioe.getMessage();
+        }
+    }
+
+    /*
+     * Deserializa un arreglo de alimentos desde un archivo binario en la ruta especificada.
+     *
+     * @param path Ruta del directorio donde se encuentra el archivo.
+     * @param name Nombre del archivo a deserializar.
+     * @return Arreglo de objetos {@link Alimento} recuperados desde el archivo,
+     *         o {@code null} si ocurre un error durante la lectura.
+     */
+    public Alimento[] deserializar(String path, String name) {
+        Alimento[] a = null;
+        try {
+            FileInputStream fis = new FileInputStream(path + name);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            a = (Alimento[]) ois.readObject(); // leer el arreglo
+            ois.close();
+            fis.close();
+
+            alimentos = a; // nueva linea
+        } catch (IOException ioe) {
+            System.err.println(ioe.getMessage());
+        } catch (ClassNotFoundException c) {
+            System.err.println(c.getMessage());
+        }
+        return a;
     }
 }
