@@ -1,5 +1,7 @@
 package co.edu.poli.contexto2.vista;
 
+import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import co.edu.poli.contexto2.model.*;
@@ -11,11 +13,10 @@ public class Principal {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        int opcion;
+        int opcion = 0;
 
         Operacioncrud crud = new Implementacionoperacioncrud();
 
-        // menu
         do {
             System.out.println("---- MENU DE OPCIONES ----");
             System.out.println("1. Digite 1 para CREAR un alimento");
@@ -27,15 +28,35 @@ public class Principal {
             System.out.println("7. Digite 7 para DESERIALIZAR");
             System.out.println("8. Salir");
             System.out.print("Elija una opción: ");
-            opcion = scanner.nextInt();
+
+            try {
+                opcion = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("ERROR: por favor ingrese solo numeros del 1 al 8 para las opciones. "
+                		+ "\nSi ingresa una letra o algun caracter diferente a los numeros del 1 al 8 como opcion no dejara seguir el programa. "
+                		+ "\n Intentelo de nuevo.");
+                scanner.nextLine();
+                opcion = 0;
+            }
 
             switch (opcion) {
 
             case 1:
                 System.out.println("=== CREAR ===");
 
-                System.out.print("Codigo: ");
-                int codigo = scanner.nextInt();
+                int codigo = 0;
+                boolean entradaValida = false;
+                while (!entradaValida) {
+                    System.out.print("Codigo: ");
+                    try {
+                        codigo = scanner.nextInt();
+                        entradaValida = true;
+                    } catch (InputMismatchException e) {
+                        System.out.println("ERROR: Por favor digite solo numeros para el codigo, no es valido ningun caracter mas."
+                        		+ "\n Digite nuevamente el  codigo:");
+                        scanner.nextLine();
+                    }
+                }
                 scanner.nextLine();
 
                 System.out.print("Nombre: ");
@@ -47,11 +68,33 @@ public class Principal {
                 System.out.print("Tamaño: ");
                 String tamano = scanner.nextLine();
 
-                System.out.print("Cantidad: ");
-                int cantidad = scanner.nextInt();
+                int cantidad = 0;
+                entradaValida = false;
+                while (!entradaValida) {
+                    System.out.print("Cantidad: ");
+                    try {
+                        cantidad = scanner.nextInt();
+                        entradaValida = true;
+                    } catch (InputMismatchException e) {
+                        System.out.println("ERROR: La cantidad debe ser solo en numeros, no acepta ningun caracter mas."
+                        		+ "\n Digite nuevamente la cantidad:");
+                        scanner.nextLine();
+                    }
+                }
 
-                System.out.print("Costo: ");
-                double costo = scanner.nextDouble();
+                double costo = 0;
+                entradaValida = false;
+                while (!entradaValida) {
+                    System.out.print("Costo: ");
+                    try {
+                        costo = scanner.nextDouble();
+                        entradaValida = true;
+                    } catch (InputMismatchException e) {
+                        System.out.println("ERROR: El costo debe ser solo en numeros, no acepta ningun caracter mas."
+                        		+ "\n Digite nuevamente el costo:");
+                        scanner.nextLine();
+                    }
+                }
                 scanner.nextLine();
 
                 System.out.print("Estado: ");
@@ -60,19 +103,51 @@ public class Principal {
                 System.out.print("Recipiente: ");
                 String recipiente = scanner.nextLine();
 
-                System.out.print("¿Es refrigerable? (true/false): ");
-                boolean esRefrigerable = scanner.nextBoolean();
+                boolean esRefrigerable = false;
+                entradaValida = false;
+                while (!entradaValida) {
+                    System.out.print("¿Es refrigerable? (true/false): ");
+                    try {
+                        esRefrigerable = scanner.nextBoolean();
+                        entradaValida = true;
+                    } catch (InputMismatchException e) {
+                        System.out.println("ERROR: Solo ingrese true o false, no acepta ninguna palabra diferente. (true: si, false: n)"
+                        		+ "\n Digite nuevamente la respuesta correcta:");
+                        scanner.nextLine();
+                    }
+                }
 
-                System.out.print("Peso: ");
-                double peso = scanner.nextDouble();
+                double peso = 0;
+                entradaValida = false;
+                while (!entradaValida) {
+                    System.out.print("Peso: ");
+                    try {
+                        peso = scanner.nextDouble();
+                        entradaValida = true;
+                    } catch (InputMismatchException e) {
+                        System.out.println("ERROR: El peso debe ser solo en numeros, no acepta ningun caracter mas."
+                        		+ "\n Digite nuevamente el peso: ");
+                        scanner.nextLine();
+                    }
+                }
                 scanner.nextLine();
 
                 System.out.print("Proveedor: ");
                 String proveedor = scanner.nextLine();
 
-                // Atributos de Perecedero
-                System.out.print("Dias de vencimiento: ");
-                int dias = scanner.nextInt();
+                int dias = 0;
+                entradaValida = false;
+                while (!entradaValida) {
+                    System.out.print("Dias de vencimiento: ");
+                    try {
+                        dias = scanner.nextInt();
+                        entradaValida = true;
+                    } catch (InputMismatchException e) {
+                        System.out.println("ERROR: Los dias deben ser solo en numeros, no acepta ningun caracter mas."
+                        		+ "\n Digite nuevamente los dias:");
+                        scanner.nextLine();
+                    }
+                }
                 scanner.nextLine();
 
                 System.out.print("Tipo de conservacion: ");
@@ -86,6 +161,7 @@ public class Principal {
 
                 System.out.println(crud.crear(alimento));
                 break;
+                    
 
                 case 2:
                     System.out.println("=== CONSULTAR ===");
@@ -133,30 +209,31 @@ public class Principal {
 
                 case 6:
                     System.out.println("=== SERIALIZAR ===");
-
                     Implementacionoperacioncrud impl = (Implementacionoperacioncrud) crud;
-
-                    // El archivo datos.bin se genera en la raíz del proyecto (workspace de Eclipse)
-                    System.out.println(impl.serializar("", "datos.bin"));
-
+                    try {
+                        System.out.println(impl.serializar("", "datos.bin"));
+                    } catch (IOException e) {
+                        System.out.println("ERROR al serializar: " + e.getMessage());
+                    }
                     break;
 
                 case 7:
                     System.out.println("=== DESERIALIZAR ===");
-
                     Implementacionoperacioncrud impl2 = (Implementacionoperacioncrud) crud;
-
-                    // Mismo nombre que se usó al serializar
-                    Alimento[] datos = impl2.deserializar("", "datos.bin");
-
-                    if (datos != null) {
-                        for (Alimento a : datos) {
-                            if (a != null) {
-                                System.out.println(a.describir());
+                    try {
+                        Alimento[] datos = impl2.deserializar("", "datos.bin");
+                        if (datos != null) {
+                            for (Alimento a : datos) {
+                                if (a != null) {
+                                    System.out.println(a.describir());
+                                }
                             }
                         }
+                    } catch (IOException e) {
+                        System.out.println("ERROR: No se encuentra el archivo. Use la opción 6 primero.");
+                    } catch (ClassNotFoundException e) {
+                        System.out.println("ERROR: Clase no reconocida al deserializar.");
                     }
-
                     break;
 
                 case 8:

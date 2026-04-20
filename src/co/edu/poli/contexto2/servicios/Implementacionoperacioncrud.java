@@ -237,17 +237,14 @@ public class Implementacionoperacioncrud implements Operacioncrud {
     }
     
     //aca empieza serializar y deserealizar
-    public String serializar(String path, String name) {
-        try {
+    public String serializar(String path, String name) throws IOException{
+        
             FileOutputStream fos = new FileOutputStream(path + name);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(alimentos); // mi arreglo
             oos.close();
             fos.close();
             return "File create!!";
-        } catch (IOException ioe) {
-            return "Error file " + ioe.getMessage();
-        }
     }
 
     /*
@@ -258,9 +255,9 @@ public class Implementacionoperacioncrud implements Operacioncrud {
      * @return Arreglo de objetos {@link Alimento} recuperados desde el archivo,
      *         o {@code null} si ocurre un error durante la lectura.
      */
-    public Alimento[] deserializar(String path, String name) {
+    public Alimento[] deserializar(String path, String name) throws IOException, ClassNotFoundException{
         Alimento[] a = null;
-        try {
+
             FileInputStream fis = new FileInputStream(path + name);
             ObjectInputStream ois = new ObjectInputStream(fis);
             a = (Alimento[]) ois.readObject(); // leer el arreglo
@@ -268,11 +265,6 @@ public class Implementacionoperacioncrud implements Operacioncrud {
             fis.close();
 
             alimentos = a; // nueva linea
-        } catch (IOException ioe) {
-            System.err.println(ioe.getMessage());
-        } catch (ClassNotFoundException c) {
-            System.err.println(c.getMessage());
-        }
         return a;
-    }
-}
+    
+}}
