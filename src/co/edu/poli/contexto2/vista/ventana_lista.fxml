@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            prefWidth="820" prefHeight="500">
+
+    <!-- HEADER -->
+    <HBox alignment="CENTER_LEFT" spacing="12" style="-fx-padding: 12 20;"
+          AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+        <Label text="TODOS LOS ALIMENTOS REGISTRADOS" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="Volver" onAction="#cerrarVentanaLista"/>
+    </HBox>
+
+    <Separator AnchorPane.topAnchor="45" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"/>
+
+    <!-- TABLA -->
+    <TableView fx:id="tablaLista"
+               AnchorPane.topAnchor="55" AnchorPane.leftAnchor="10"
+               AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="45">
+        <columns>
+            <TableColumn fx:id="lstCodigo"  text="Codigo"  prefWidth="70"/>
+            <TableColumn fx:id="lstNombre"  text="Nombre"  prefWidth="160"/>
+            <TableColumn fx:id="lstTipo"    text="Tipo"    prefWidth="110"/>
+            <TableColumn fx:id="lstFecha"   text="Fecha"   prefWidth="100"/>
+            <TableColumn fx:id="lstCosto"   text="Costo"   prefWidth="90"/>
+            <TableColumn fx:id="lstDetalle" text="Detalle" prefWidth="240"/>
+        </columns>
+        <placeholder>
+            <Label text="No hay alimentos registrados."/>
+        </placeholder>
+    </TableView>
+
+    <!-- BARRA INFERIOR -->
+    <HBox alignment="CENTER_LEFT" spacing="8" style="-fx-padding: 8 12;"
+          AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+        <Label fx:id="lblTotalLista" text="Total: 0 alimentos"/>
+    </HBox>
+
+</AnchorPane>

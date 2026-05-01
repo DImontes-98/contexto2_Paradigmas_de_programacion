@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="co.edu.poli.mvc.controlador.controlador_formulario"
+            prefWidth="1100" prefHeight="720">
+
+    <fx:define>
+        <ToggleGroup fx:id="grupoTipo"/>
+    </fx:define>
+
+    <!-- COLUMNA IZQUIERDA: FORMULARIO -->
+    <ScrollPane fitToWidth="true" prefWidth="450" prefHeight="720"
+                AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.bottomAnchor="0">
+
+        <VBox spacing="12" style="-fx-padding: 16;">
+
+            <!-- TIPO DE ALIMENTO -->
+            <VBox spacing="6">
+                <Label text="TIPO DE ALIMENTO" style="-fx-font-weight: bold;"/>
+                <HBox spacing="20">
+                    <RadioButton fx:id="rbPerecedero" text="Perecedero"
+                                 selected="true" onAction="#actualizarCamposTipo"
+                                 toggleGroup="$grupoTipo"/>
+                    <RadioButton fx:id="rbNoPerecedero" text="No Perecedero"
+                                 onAction="#actualizarCamposTipo"
+                                 toggleGroup="$grupoTipo"/>
+                </HBox>
+            </VBox>
+
+            <Separator/>
+
+            <!-- DATOS BÁSICOS -->
+            <VBox spacing="8">
+                <Label text="DATOS BÁSICOS" style="-fx-font-weight: bold;"/>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Nombre:" minWidth="80"/>
+                    <TextField fx:id="txtNombre" promptText="Ej: Leche entera"
+                               maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                </HBox>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Código:" minWidth="80"/>
+                    <TextField fx:id="txtCodigo" promptText="Ej: 101"
+                               maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                </HBox>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Fecha:" minWidth="80"/>
+                    <DatePicker fx:id="dpFecha" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                </HBox>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Costo ($):" minWidth="80"/>
+                    <TextField fx:id="txtCosto" promptText="Ej: 4500.0"
+                               maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                </HBox>
+                <CheckBox fx:id="chkRefrigerable" text="Es refrigerable"/>
+            </VBox>
+
+            <Separator/>
+
+            <!-- PANEL PERECEDERO -->
+            <VBox fx:id="panelPerecedero" spacing="8">
+                <Label text="DATOS PERECEDERO" style="-fx-font-weight: bold;"/>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Dias venc.:" minWidth="80"/>
+                    <Spinner fx:id="spnDias" min="1" max="365" initialValue="7"
+                             editable="true" prefWidth="100"/>
+                    <Label text="dias"/>
+                </HBox>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Conserv.:" minWidth="80"/>
+                    <ComboBox fx:id="cmbConservacion" maxWidth="Infinity" HBox.hgrow="ALWAYS">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Refrigeracion"/>
+                                <String fx:value="Congelacion"/>
+                                <String fx:value="Temperatura ambiente"/>
+                                <String fx:value="Atmosfera controlada"/>
+                                <String fx:value="Vacio"/>
+                            </FXCollections>
+                        </items>
+                    </ComboBox>
+                </HBox>
+            </VBox>
+
+            <!-- PANEL NO PERECEDERO -->
+            <VBox fx:id="panelNoPerecedero" spacing="8" managed="false" visible="false">
+                <Label text="DATOS NO PERECEDERO" style="-fx-font-weight: bold;"/>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Anos vida:" minWidth="80"/>
+                    <Spinner fx:id="spnAnos" min="1" max="50" initialValue="2"
+                             editable="true" prefWidth="100"/>
+                    <Label text="anos"/>
+                </HBox>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Empaque:" minWidth="80"/>
+                    <ComboBox fx:id="cmbEmpaque" maxWidth="Infinity" HBox.hgrow="ALWAYS">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Bolsa hermetica"/>
+                                <String fx:value="Lata"/>
+                                <String fx:value="Vidrio sellado"/>
+                                <String fx:value="Caja carton"/>
+                                <String fx:value="Vacio al vacio"/>
+                            </FXCollections>
+                        </items>
+                    </ComboBox>
+                </HBox>
+            </VBox>
+
+            <Separator/>
+
+            <!-- BOTONES CRUD -->
+            <VBox spacing="8">
+                <Label text="OPERACIONES CRUD" style="-fx-font-weight: bold;"/>
+                <HBox spacing="8">
+                    <Button text="CREAR" onAction="#crear" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                    <Button text="CONSULTAR" onAction="#consultar" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                </HBox>
+                <HBox spacing="8">
+                    <Button text="MODIFICAR" onAction="#modificar" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                    <Button text="ELIMINAR" onAction="#eliminar" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                </HBox>
+                <Button text="VER TODOS LOS REGISTROS" onAction="#abrirVentanaListar" maxWidth="Infinity"/>
+            </VBox>
+
+            <Separator/>
+
+            <!-- SERIALIZACIÓN -->
+            <VBox spacing="8">
+                <Label text="PERSISTENCIA DE DATOS" style="-fx-font-weight: bold;"/>
+                <HBox spacing="8">
+                    <Button text="GUARDAR" onAction="#serializar" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                    <Button text="CARGAR" onAction="#deserializar" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                </HBox>
+            </VBox>
+
+        </VBox>
+    </ScrollPane>
+
+    <!-- DIVISOR -->
+    <Separator orientation="VERTICAL"
+               AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+               AnchorPane.leftAnchor="450"/>
+
+    <!-- COLUMNA DERECHA: TABLA -->
+    <VBox spacing="10" style="-fx-padding: 16;"
+          AnchorPane.topAnchor="0" AnchorPane.leftAnchor="460"
+          AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0">
+
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Label text="REGISTROS EN SESION" style="-fx-font-weight: bold;"/>
+            <Label fx:id="lblContador" text="0 registros"/>
+        </HBox>
+
+        <TableView fx:id="tablaAlimentos" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colCodigo"  text="Codigo"  prefWidth="65"/>
+                <TableColumn fx:id="colNombre"  text="Nombre"  prefWidth="150"/>
+                <TableColumn fx:id="colTipo"    text="Tipo"    prefWidth="100"/>
+                <TableColumn fx:id="colFecha"   text="Fecha"   prefWidth="95"/>
+                <TableColumn fx:id="colCosto"   text="Costo"   prefWidth="80"/>
+                <TableColumn fx:id="colDetalle" text="Detalle" prefWidth="180"/>
+            </columns>
+            <placeholder>
+                <Label text="Sin registros. Crea el primero."/>
+            </placeholder>
+        </TableView>
+
+        <HBox spacing="8" alignment="CENTER_LEFT">
+            <Label text="Estado:"/>
+            <Label fx:id="lblEstado" text="Listo."/>
+        </HBox>
+
+    </VBox>
+
+</AnchorPane>

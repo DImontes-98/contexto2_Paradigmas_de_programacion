@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            prefWidth="420" prefHeight="300">
+
+    <!-- HEADER -->
+    <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 14 18;"
+          AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+        <Label text="ANTES DE SALIR" style="-fx-font-weight: bold; -fx-font-size: 13px;"/>
+    </HBox>
+
+    <Separator AnchorPane.topAnchor="45" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"/>
+
+    <!-- CONTENIDO -->
+    <VBox spacing="14" style="-fx-padding: 16 20;"
+          AnchorPane.topAnchor="55" AnchorPane.leftAnchor="0"
+          AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0">
+
+        <Label text="Tienes datos en memoria que NO han sido guardados." wrapText="true"/>
+
+        <Label fx:id="lblResumenCierre" text="Alimentos en sesion: 0"
+               style="-fx-font-weight: bold;"/>
+
+        <Label text="Que deseas hacer?"/>
+
+        <VBox spacing="8">
+            <Button text="Guardar y salir" onAction="#guardarYSalir" maxWidth="Infinity"/>
+            <Button text="Cargar datos anteriores" onAction="#cargarAlAbrir" maxWidth="Infinity"/>
+            <Button text="Salir sin guardar" onAction="#salirSinGuardar" maxWidth="Infinity"/>
+            <Button text="Cancelar (volver a la app)" onAction="#cancelarCierre" maxWidth="Infinity"/>
+        </VBox>
+
+    </VBox>
+
+</AnchorPane>
